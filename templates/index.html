@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} CRUD products {% endblock %}</h1>
+
+    <form method="POST">
+        <ul style="display: inline">
+            <li style="display: inline">
+                <a href="{{ url_for('handle_create') }}">Create</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_read') }}">Read</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_update') }}">Update</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_delete') }}">Delete</a>
+            </li>
+        </ul>
+
+        {{ form.csrf_token }}
+
+        {% for field in form %}
+            <p>
+                {{ field.label }}
+                {{ field }}
+            </p>    
+            {% if field.errors %}
+                <ul class="errors">
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+        <ul style="display: inline">
+            <li style="display: inline">
+                <a href="{{ url_for('handle_create') }}">Create</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_read') }}">Read</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_update') }}">Update</a>
+            </li>
+            <li style="display: inline">
+                <a href="{{ url_for('handle_delete') }}">Delete</a>
+            </li>
+        </ul>
+    </form>
+<style>
+
+li a {
+    background: lightgray;
+    border: 1px solid gray;
+    padding: 1px 10px;
+    text-decoration: none;
+    color: black;
+}
+li a:active {
+    transform: scale(0.9);
+}
+
+</style>
+{% endblock %}

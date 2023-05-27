@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+namespace AddProductToWooCommerceAPI
+{
+    class Program
+    {
+        static async Task Main(string[] args)
+        {
+            // Enter your WooCommerce API credentials and the URL of your store
+            string consumerKey = "ck_4f3d65e21d0611bd6eb4f1fba7dec1d2107569fe";
+            string consumerSecret = "cs_015def84b0e65cd94812aab5afe640a446fc019f";
+            string storeUrl = "http://localhost/shoptainghe";
+
+            //Create a new HttpClient with the base URL of the WooCommerce API
+            var httpClient = new HttpClient { BaseAddress = new Uri($"{storeUrl}/wp-json/wc/v3/") };
+
+            // Add authentication headers
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{consumerKey}:{consumerSecret}")));
+
+            // Define the product data to add
+            var product = new
+            {
+                name = "New Product",
+                type = "simple",
+                regular_price = "19.99",
+                description = "This is a new product",
+                categories = new[]
+                {
+                new { id = 9 } // Enter the category ID for the category the product should belong to
+                }
+            };
+
+            // Convert the product data to JSON
+            var jsonProduct = JsonConvert.SerializeObject(product);
+
+            // Create a new HttpRequestMessage with the product data
+            var request = new HttpRequestMessage(HttpMethod.Post, "products")
+            {
+                Content = new StringContent(jsonProduct, Encoding.UTF8, "application/json")
+            };
+
+            // Send the request to the WooCommerce API
+            var response = await httpClient.SendAsync(request);
+
+            // If the request was successful, display the product ID that was added
+            if (response.IsSuccessStatusCode)
+            {
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var addedProduct = JsonConvert.DeserializeObject<dynamic>(responseBody);
+                Console.WriteLine($"Product added with ID: {addedProduct.id}");
+            }
+            else
+            {
+                Console.WriteLine($"Failed to add product: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
+            }
+        }
+    }
+}
