@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, request
 from forms import ProductForm
 import secrets
 import sys
+import api
 
 
 app = Flask(__name__)
@@ -10,8 +11,10 @@ app.config['SECRET_KEY'] = secrets.token_urlsafe(16)
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
-  form = ProductForm()
-  return render_template('index.html', form=form)
+  products = api.get_products()
+  return render_template('products.html', products=products)
+  # form = ProductForm()
+  # return render_template('index.html', form=form)
 
 
 @app.route('/handle_create', methods=('GET', 'POST'))

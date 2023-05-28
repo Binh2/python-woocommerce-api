@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Products {% endblock %}</h1>
+
+    {% for product in products %}
+       {% product.images|split:","[0] %} 
+    {% endfor %}
+<style>
+
+li a {
+    background: lightgray;
+    border: 1px solid gray;
+    padding: 1px 10px;
+    text-decoration: none;
+    color: black;
+}
+li a:active {
+    transform: scale(0.9);
+}
+
+</style>
+{% endblock %}
