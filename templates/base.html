@@ -3,19 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %} {% endblock %} - FlaskApp</title>
-    <style>
-        nav a {
-            color: #d64161;
-            font-size: 3em;
-            margin-left: 50px;
-            text-decoration: none;
-        }
-    </style>
+    {% block style %} {% endblock %}
+<style>
+nav a {
+    color: #d64161;
+    font-size: 3em;
+    margin-left: 50px;
+    text-decoration: none;
+}
+a *, a:hover *, a:visited *, a:active *, a:link * {
+    color: black;
+    text-decoration: none !important;
+}
+.three-dot {
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.three-dot .three-dot__tooltip {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 50%;
+    background: black;
+    color: white;
+    padding: 0.25em;
+    border-radius: 5px;
+
+    //visibility: hidden;
+    transition-property: visibility;
+    transition-delay: 0.1s;
+}
+.three-dot:hover .three-dot__tooltip {
+    visibility: visible;
+}
+</style>
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('index') }}">FlaskApp</a>
-        <a href="#">About</a>
+        <a href="/">WoocommerceAPI</a>
+        <a href="/create">Create product</a>
     </nav>
     <hr>
     <div class="content">

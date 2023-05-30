@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Product (id = {{product['id']}}) {% endblock %}</h1>
+
+    <img src="{{ product.image|safe }}" />
+    <h2>{{ product.name|safe }}</h2>
+    <p>{{ product.price|safe }}</p>
+    {% autoescape off %}
+        {{ product.description }}
+    {% endautoescape %}
+<style>
+</style>
+{% endblock %}

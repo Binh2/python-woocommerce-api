@@ -3,20 +3,50 @@
 {% block content %}
     <h1>{% block title %} Products {% endblock %}</h1>
 
-    {% for product in products %}
-       {% product.images|split:","[0] %} 
-    {% endfor %}
+    <div>
+        <a href="{{ previous_page }}">Back</a>
+        <a href="{{ previous_page }}">Next</a>
+    </div>
+
+    <ul class="products">
+        {% for product in products %}
+        <li class="product">
+            <a href="{{ 'products/' + product.id }}" style="text-decoration: none">
+                <img class="product__image" src="{{ product.image }}" />
+                <h2 class="three-dot">
+                    {{ product.name }}
+                    <p class="three-dot__tooltip">{{ product.name }}</p>
+                </h2>
+                <p>{{ product.price }}</p>
+            </a>
+            <div>
+                <a href="update/{{ product.id }}">Update</a>
+                <a href="api/delete/{{ product.id }}">Delete</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    
 <style>
 
-li a {
-    background: lightgray;
-    border: 1px solid gray;
-    padding: 1px 10px;
-    text-decoration: none;
-    color: black;
+h2 {
+    font-size: 1.2em;
+    font-weight: normal;
 }
-li a:active {
-    transform: scale(0.9);
+.products {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+.product {
+    list-style: none;
+    max-width: calc(25% - 20px);
+}
+.product__image {
+    width: 100%;
 }
 
 </style>
