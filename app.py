@@ -86,4 +86,3 @@ def handle_delete(id: str):
   product = api.delete_product(int(id))
   print(f'{product=}')
   return redirect('/')
-
