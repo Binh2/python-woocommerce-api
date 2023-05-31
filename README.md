@@ -9,5 +9,11 @@ You will have to WooCommerce API first and generate secret keys. I put an exampl
 
 Change the ini.json to your specific Wordpress website. 
 
+```bash
+pip install WooCommerce
+pip install Flask
+pip install Flask-WTF
+```
+
 `python run.py` to run Flask server
 
